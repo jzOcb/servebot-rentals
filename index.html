@@ -323,32 +323,73 @@
             <h2 class="section-title">Ready to Practice?</h2>
             <p class="section-subtitle">Book your tennis ball machine rental now</p>
             
-            <!-- Cal.com embed -->
-            <div class="booking-options">
-                <h3>Select Your Rental Type</h3>
-                <div class="booking-grid">
-                    <a href="https://cal.com/zuojason/halfday-weekday" target="_blank" class="booking-option">
-                        <span class="option-title">Half Day - Weekday</span>
-                        <span class="option-price">$45</span>
-                    </a>
-                    <a href="https://cal.com/zuojason/fullday-weekday" target="_blank" class="booking-option">
-                        <span class="option-title">Full Day - Weekday</span>
-                        <span class="option-price">$75</span>
-                    </a>
-                    <a href="https://cal.com/zuojason/halfday-weekend" target="_blank" class="booking-option">
-                        <span class="option-title">Half Day - Weekend</span>
-                        <span class="option-price">$55</span>
-                    </a>
-                    <a href="https://cal.com/zuojason/fullday-weekend" target="_blank" class="booking-option">
-                        <span class="option-title">Full Day - Weekend</span>
-                        <span class="option-price">$100</span>
-                    </a>
-                    <a href="https://cal.com/zuojason/weekend-package" target="_blank" class="booking-option featured">
-                        <span class="option-title">Weekend Package (Sat+Sun)</span>
-                        <span class="option-price">$175</span>
-                    </a>
-                </div>
-                <p class="booking-note">+ $300 refundable security deposit | Delivery available +$25</p>
+            <!-- Booking Form -->
+            <div class="booking-form-container">
+                <form class="booking-form" action="https://formspree.io/f/xyzgkqvw" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rental-type">Rental Type *</label>
+                            <select id="rental-type" name="rental_type" required>
+                                <option value="">Select...</option>
+                                <option value="Half Day Weekday - $45">Half Day Weekday - $45</option>
+                                <option value="Full Day Weekday - $75">Full Day Weekday - $75</option>
+                                <option value="Half Day Weekend - $55">Half Day Weekend - $55</option>
+                                <option value="Full Day Weekend - $100">Full Day Weekend - $100</option>
+                                <option value="Weekend Package (Sat+Sun) - $175">Weekend Package (Sat+Sun) - $175</option>
+                                <option value="Weekly - $350">Weekly - $350</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="start-date">Start Date *</label>
+                            <input type="date" id="start-date" name="start_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="end-date">End Date</label>
+                            <input type="date" id="end-date" name="end_date">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pickup-delivery">Pickup or Delivery *</label>
+                        <select id="pickup-delivery" name="pickup_delivery" required>
+                            <option value="">Select...</option>
+                            <option value="Pickup in Newton (Free)">Pickup in Newton (Free)</option>
+                            <option value="Delivery (+$25)">Delivery within 15 miles (+$25)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="address-group" style="display:none;">
+                        <label for="address">Delivery Address</label>
+                        <input type="text" id="address" name="delivery_address" placeholder="Street, City, ZIP">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Notes (optional)</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="Any questions or special requests?"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">Submit Booking Request</button>
+                    
+                    <p class="form-note">We'll confirm availability and send payment instructions within 24 hours.<br>$300 refundable security deposit required.</p>
+                </form>
             </div>
 
             <div class="booking-contact">

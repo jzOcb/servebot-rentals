@@ -103,5 +103,31 @@ function initCalEmbed(calLink) {
     }
 }
 
-// Uncomment and add your Cal.com link when ready:
-// initCalEmbed('your-username/rental');
+// Show/hide delivery address field
+const pickupSelect = document.getElementById('pickup-delivery');
+const addressGroup = document.getElementById('address-group');
+
+if (pickupSelect && addressGroup) {
+    pickupSelect.addEventListener('change', function() {
+        if (this.value.includes('Delivery')) {
+            addressGroup.style.display = 'block';
+            document.getElementById('address').required = true;
+        } else {
+            addressGroup.style.display = 'none';
+            document.getElementById('address').required = false;
+        }
+    });
+}
+
+// Set minimum date to today
+const startDate = document.getElementById('start-date');
+const endDate = document.getElementById('end-date');
+if (startDate) {
+    const today = new Date().toISOString().split('T')[0];
+    startDate.min = today;
+    if (endDate) endDate.min = today;
+    
+    startDate.addEventListener('change', function() {
+        if (endDate) endDate.min = this.value;
+    });
+}

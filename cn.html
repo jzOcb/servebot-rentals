@@ -326,32 +326,73 @@
             <h2 class="section-title">准备好练球了吗？</h2>
             <p class="section-subtitle">现在就预约您的网球发球机</p>
             
-            <!-- Cal.com embed -->
-            <div class="booking-options">
-                <h3>选择租赁类型</h3>
-                <div class="booking-grid">
-                    <a href="https://cal.com/zuojason/halfday-weekday" target="_blank" class="booking-option">
-                        <span class="option-title">工作日 半天</span>
-                        <span class="option-price">$45</span>
-                    </a>
-                    <a href="https://cal.com/zuojason/fullday-weekday" target="_blank" class="booking-option">
-                        <span class="option-title">工作日 全天</span>
-                        <span class="option-price">$75</span>
-                    </a>
-                    <a href="https://cal.com/zuojason/halfday-weekend" target="_blank" class="booking-option">
-                        <span class="option-title">周末 半天</span>
-                        <span class="option-price">$55</span>
-                    </a>
-                    <a href="https://cal.com/zuojason/fullday-weekend" target="_blank" class="booking-option">
-                        <span class="option-title">周末 全天</span>
-                        <span class="option-price">$100</span>
-                    </a>
-                    <a href="https://cal.com/zuojason/weekend-package" target="_blank" class="booking-option featured">
-                        <span class="option-title">周末套餐 (周六+周日)</span>
-                        <span class="option-price">$175</span>
-                    </a>
-                </div>
-                <p class="booking-note">+ $300 押金 (可退还) | 送货上门 +$25</p>
+            <!-- Booking Form -->
+            <div class="booking-form-container">
+                <form class="booking-form" action="https://formspree.io/f/xyzgkqvw" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">姓名 *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">邮箱 *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">电话 *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rental-type">租赁类型 *</label>
+                            <select id="rental-type" name="rental_type" required>
+                                <option value="">请选择...</option>
+                                <option value="工作日半天 - $45">工作日半天 - $45</option>
+                                <option value="工作日全天 - $75">工作日全天 - $75</option>
+                                <option value="周末半天 - $55">周末半天 - $55</option>
+                                <option value="周末全天 - $100">周末全天 - $100</option>
+                                <option value="周末套餐(周六+周日) - $175">周末套餐(周六+周日) - $175</option>
+                                <option value="周租 - $350">周租 - $350</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="start-date">开始日期 *</label>
+                            <input type="date" id="start-date" name="start_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="end-date">结束日期</label>
+                            <input type="date" id="end-date" name="end_date">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pickup-delivery">自取或送货 *</label>
+                        <select id="pickup-delivery" name="pickup_delivery" required>
+                            <option value="">请选择...</option>
+                            <option value="Newton自取 (免费)">Newton自取 (免费)</option>
+                            <option value="送货上门 (+$25)">送货上门 15英里内 (+$25)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="address-group" style="display:none;">
+                        <label for="address">送货地址</label>
+                        <input type="text" id="address" name="delivery_address" placeholder="街道, 城市, 邮编">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">备注 (可选)</label>
+                        <textarea id="notes" name="notes" rows="3" placeholder="任何问题或特殊要求?"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">提交预约申请</button>
+                    
+                    <p class="form-note">我们会在24小时内确认可用性并发送付款链接。<br>需要 $300 可退还押金。</p>
+                </form>
             </div>
 
             <div class="booking-contact">
