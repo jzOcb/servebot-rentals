@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServeBot Rentals | 波士顿网球发球机租赁</title>
+    <meta name="description" content="大波士顿地区专业网球发球机租赁服务。随时练习，无需球友，无需购买。半天$45起。Newton取货或送货上门。">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans SC', 'Inter', sans-serif; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">🎾</span>
+                <span class="logo-text">ServeBot</span>
+            </a>
+            <div class="nav-links">
+                <a href="#pricing">价格</a>
+                <a href="#how-it-works">租赁流程</a>
+                <a href="#faq">常见问题</a>
+                <a href="index.html" class="lang-switch">English</a>
+                <a href="#book" class="btn btn-primary">立即预约</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>网球练习，<br><span class="highlight">从此简单。</span></h1>
+            <p class="hero-subtitle">大波士顿地区首选网球发球机租赁服务<br>随时练球，不需要球友，不用花$2,000购买</p>
+            <div class="hero-buttons">
+                <a href="#book" class="btn btn-primary btn-large">立即预约</a>
+                <a href="#pricing" class="btn btn-secondary btn-large">查看价格</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">$45</span>
+                    <span class="stat-label">起步价</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">台机器可用</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">15英里</span>
+                    <span class="stat-label">配送范围</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="trust-bar">
+        <div class="container">
+            <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>专业设备</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>在线预约</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>自取或配送</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>Stripe安全支付</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title">简单透明的价格</h2>
+            <p class="section-subtitle">无隐藏费用，押金全额退还</p>
+            
+            <div class="pricing-toggle">
+                <button class="toggle-btn active" data-period="weekday">工作日</button>
+                <button class="toggle-btn" data-period="weekend">周末</button>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>半天</h3>
+                        <p>4小时练习时间</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="price weekday-price">$45</span>
+                        <span class="price weekend-price" style="display:none;">$55</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 完整机器使用权</li>
+                        <li>✓ 含遥控器</li>
+                        <li>✓ 支持App连接</li>
+                        <li>✓ 提供使用教程</li>
+                    </ul>
+                    <a href="#book" class="btn btn-outline">选择</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">最受欢迎</div>
+                    <div class="pricing-header">
+                        <h3>全天</h3>
+                        <p>不限练习时间</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="price weekday-price">$70</span>
+                        <span class="price weekend-price" style="display:none;">$100</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 包含半天所有内容</li>
+                        <li>✓ 性价比最高</li>
+                        <li>✓ 练多久都可以</li>
+                        <li>✓ 适合认真训练</li>
+                    </ul>
+                    <a href="#book" class="btn btn-primary">选择</a>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>周末特惠</h3>
+                        <p>周六 + 周日</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="price">$175</span>
+                        <span class="price-note">省$25</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ 完整两天使用</li>
+                        <li>✓ 周五晚取机</li>
+                        <li>✓ 周一早还机</li>
+                        <li>✓ 周末练球首选</li>
+                    </ul>
+                    <a href="#book" class="btn btn-outline">选择</a>
+                </div>
+            </div>
+
+            <div class="pricing-extras">
+                <h4>附加服务 & 长租</h4>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">周租</span>
+                        <span class="extra-price">$350</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">送货上门 (15英里内)</span>
+                        <span class="extra-price">+$25</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">网球 (1筒)</span>
+                        <span class="extra-price">+$5</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">押金</span>
+                        <span class="extra-price">$300 <span class="note">(可退还)</span></span>
+                    </div>
+                </div>
+                <p class="rent-to-own">💡 <strong>租金可抵购买：</strong>您的租金可以抵扣购买价格。<a href="#contact">联系我们</a>了解详情。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Machine Section -->
+    <section id="machine" class="machine">
+        <div class="container">
+            <div class="machine-content">
+                <div class="machine-text">
+                    <h2>专业级设备</h2>
+                    <p class="machine-subtitle">智能网球发球机，功能强大</p>
+                    <ul class="machine-features">
+                        <li>
+                            <span class="feature-icon">📱</span>
+                            <div>
+                                <strong>App + 遥控器双控制</strong>
+                                <p>手机App或遥控器随心操控</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="feature-icon">🎯</span>
+                            <div>
+                                <strong>多种球路组合</strong>
+                                <p>上万种发球组合，全面练习</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="feature-icon">⚡</span>
+                            <div>
+                                <strong>全场覆盖</strong>
+                                <p>底线发球覆盖整个球场</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="feature-icon">🔋</span>
+                            <div>
+                                <strong>便携电池供电</strong>
+                                <p>无需插电，任何球场都能用</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="machine-image">
+                    <img src="https://gd3.alicdn.com/imgextra/i3/49616689/O1CN01LfLvXr1zHc6TYjVTM_!!49616689.jpg" alt="网球发球机" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">租赁流程</h2>
+            <p class="section-subtitle">4步即可上场练习</p>
+            
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>在线预约</h3>
+                    <p>选择日期、时长和取货/送货方式</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>确认并付押金</h3>
+                    <p>通过Stripe支付$300可退还押金</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>取机器或等配送</h3>
+                    <p>Newton自取或送货上门(+$25)</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>练习并归还</h3>
+                    <p>尽情练习，按时归还，押金退还！</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">用户评价</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p>"非常适合独自练习！我租了一个周末试用，然后决定自己买一台。这是购买前试用的好方法。"</p>
+                    <div class="testimonial-author">
+                        <strong>Mike T.</strong>
+                        <span>Cambridge, MA</span>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p>"作为教练，我经常为夏令营租多台机器。设备可靠，预约流程简单。"</p>
+                    <div class="testimonial-author">
+                        <strong>Sarah L.</strong>
+                        <span>Brookline, MA</span>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p>"终于在波士顿有租赁服务了！机器质量很好，App控制非常方便。"</p>
+                    <div class="testimonial-author">
+                        <strong>David W.</strong>
+                        <span>Newton, MA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title">常见问题</h2>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>需要自带网球吗？</h3>
+                    <p>机器可装150个球。您可以自带，也可以在预约时加购一筒网球(+$5)。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>押金怎么退？</h3>
+                    <p>我们通过Stripe在您的信用卡上冻结$300（不扣款）。归还机器检查无损后，24小时内释放冻结。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>机器难操作吗？</h3>
+                    <p>不难！我们提供教学视频，取机器时也可以现场演示。大多数人5分钟就能上手。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>可以在任何球场使用吗？</h3>
+                    <p>可以！机器是电池供电，不需要插电。公共球场、俱乐部、私人球场都能用。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>取货地点在哪？</h3>
+                    <p>取货地点在Newton, MA。预约确认后会发送具体地址。也可以选择送货上门(+$25)。</p>
+                </div>
+                <div class="faq-item">
+                    <h3>租期内机器出问题怎么办？</h3>
+                    <p>请立即联系我们，我们会远程指导或安排更换机器。您的满意是我们的保证。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="book" class="booking">
+        <div class="container">
+            <h2 class="section-title">准备好练球了吗？</h2>
+            <p class="section-subtitle">现在就预约您的网球发球机</p>
+            
+            <!-- Cal.com embed will go here -->
+            <div class="booking-embed">
+                <div class="booking-placeholder">
+                    <p>📅 预约日历加载中...</p>
+                    <p class="booking-note">选择您想要的日期和租赁时长</p>
+                </div>
+            </div>
+
+            <div class="booking-contact">
+                <p>有问题？联系我们：</p>
+                <a href="mailto:hello@servebotrentals.com" class="contact-link">📧 hello@servebotrentals.com</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">🎾</span>
+                    <span class="logo-text">ServeBot Rentals</span>
+                    <p>大波士顿地区网球发球机租赁服务</p>
+                </div>
+                <div class="footer-links">
+                    <h4>快速链接</h4>
+                    <a href="#pricing">价格</a>
+                    <a href="#how-it-works">租赁流程</a>
+                    <a href="#faq">常见问题</a>
+                    <a href="#book">立即预约</a>
+                </div>
+                <div class="footer-service">
+                    <h4>服务范围</h4>
+                    <p>Newton, Cambridge, Boston, Brookline, Somerville, Watertown, Waltham, Wellesley, Needham, Lexington, Arlington, Belmont</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ServeBot Rentals. All rights reserved.</p>
+                <div class="footer-lang">
+                    <a href="index.html">English</a>
+                    <a href="cn.html" class="active">中文</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

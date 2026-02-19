@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServeBot Rentals | Tennis Ball Machine Rental in Boston</title>
+    <meta name="description" content="Rent professional tennis ball machines in Greater Boston. Practice anytime, no partner needed. Starting at $45/half-day. Pickup in Newton or delivery available.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">🎾</span>
+                <span class="logo-text">ServeBot</span>
+            </a>
+            <div class="nav-links">
+                <a href="#pricing">Pricing</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#faq">FAQ</a>
+                <a href="cn.html" class="lang-switch">中文</a>
+                <a href="#book" class="btn btn-primary">Book Now</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>TENNIS PRACTICE,<br><span class="highlight">SIMPLIFIED.</span></h1>
+            <p class="hero-subtitle">Greater Boston's premier tennis ball machine rental service.<br>Practice anytime. No partner needed. No $2,000 purchase.</p>
+            <div class="hero-buttons">
+                <a href="#book" class="btn btn-primary btn-large">Book Now</a>
+                <a href="#pricing" class="btn btn-secondary btn-large">View Pricing</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">$45</span>
+                    <span class="stat-label">Starting price</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Machines available</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">15mi</span>
+                    <span class="stat-label">Delivery radius</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="trust-bar">
+        <div class="container">
+            <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>Professional Equipment</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>Easy Online Booking</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>Flexible Pickup or Delivery</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>Secure Stripe Payments</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title">Simple, Transparent Pricing</h2>
+            <p class="section-subtitle">No hidden fees. Deposit fully refundable.</p>
+            
+            <div class="pricing-toggle">
+                <button class="toggle-btn active" data-period="weekday">Weekday</button>
+                <button class="toggle-btn" data-period="weekend">Weekend</button>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Half Day</h3>
+                        <p>4 hours of practice</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="price weekday-price">$45</span>
+                        <span class="price weekend-price" style="display:none;">$55</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Full machine access</li>
+                        <li>✓ Remote control included</li>
+                        <li>✓ App connectivity</li>
+                        <li>✓ Quick tutorial provided</li>
+                    </ul>
+                    <a href="#book" class="btn btn-outline">Select</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Most Popular</div>
+                    <div class="pricing-header">
+                        <h3>Full Day</h3>
+                        <p>Unlimited practice time</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="price weekday-price">$70</span>
+                        <span class="price weekend-price" style="display:none;">$100</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Everything in Half Day</li>
+                        <li>✓ Best value per hour</li>
+                        <li>✓ Practice as long as you want</li>
+                        <li>✓ Perfect for serious training</li>
+                    </ul>
+                    <a href="#book" class="btn btn-primary">Select</a>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Weekend Special</h3>
+                        <p>Saturday + Sunday</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="price">$175</span>
+                        <span class="price-note">Save $25</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Full 2-day access</li>
+                        <li>✓ Friday evening pickup</li>
+                        <li>✓ Monday morning return</li>
+                        <li>✓ Best for weekend warriors</li>
+                    </ul>
+                    <a href="#book" class="btn btn-outline">Select</a>
+                </div>
+            </div>
+
+            <div class="pricing-extras">
+                <h4>Add-ons & Long-term Rentals</h4>
+                <div class="extras-grid">
+                    <div class="extra-item">
+                        <span class="extra-name">Weekly Rental</span>
+                        <span class="extra-price">$350</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">Delivery (within 15 miles)</span>
+                        <span class="extra-price">+$25</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">Tennis Balls (1 can)</span>
+                        <span class="extra-price">+$5</span>
+                    </div>
+                    <div class="extra-item">
+                        <span class="extra-name">Security Deposit</span>
+                        <span class="extra-price">$300 <span class="note">(refundable)</span></span>
+                    </div>
+                </div>
+                <p class="rent-to-own">💡 <strong>Rent-to-Own:</strong> Your rental fees can be credited toward purchase. <a href="#contact">Contact us</a> for details.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Machine Section -->
+    <section id="machine" class="machine">
+        <div class="container">
+            <div class="machine-content">
+                <div class="machine-text">
+                    <h2>Professional-Grade Equipment</h2>
+                    <p class="machine-subtitle">Smart Tennis Ball Machine with Advanced Features</p>
+                    <ul class="machine-features">
+                        <li>
+                            <span class="feature-icon">📱</span>
+                            <div>
+                                <strong>App + Remote Control</strong>
+                                <p>Control via smartphone app or included remote</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="feature-icon">🎯</span>
+                            <div>
+                                <strong>Multiple Ball Trajectories</strong>
+                                <p>Thousands of shot combinations for varied practice</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="feature-icon">⚡</span>
+                            <div>
+                                <strong>Full Court Coverage</strong>
+                                <p>Baseline shots covering the entire court</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="feature-icon">🔋</span>
+                            <div>
+                                <strong>Portable & Battery Powered</strong>
+                                <p>No outlet needed - use on any court</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="machine-image">
+                    <img src="https://gd3.alicdn.com/imgextra/i3/49616689/O1CN01LfLvXr1zHc6TYjVTM_!!49616689.jpg" alt="Tennis Ball Machine" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Get on the court in 4 simple steps</p>
+            
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Book Online</h3>
+                    <p>Select your date, duration, and pickup or delivery option</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Confirm & Pay Deposit</h3>
+                    <p>Secure your booking with a refundable $300 deposit via Stripe</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Pick Up or Receive</h3>
+                    <p>Get the machine in Newton or we deliver to you (+$25)</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Practice & Return</h3>
+                    <p>Enjoy your session, then return the machine. Deposit refunded!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Players Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p>"Perfect for solo practice! I rented for a weekend before deciding to buy my own. Great way to try before committing."</p>
+                    <div class="testimonial-author">
+                        <strong>Mike T.</strong>
+                        <span>Cambridge, MA</span>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p>"As a coach, I rent multiple machines for summer camps. Reliable equipment and easy booking process."</p>
+                    <div class="testimonial-author">
+                        <strong>Sarah L.</strong>
+                        <span>Brookline, MA</span>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p>"Finally, a rental option in Boston! The machine is high quality and the app control is super convenient."</p>
+                    <div class="testimonial-author">
+                        <strong>David W.</strong>
+                        <span>Newton, MA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Do I need to bring my own tennis balls?</h3>
+                    <p>The machine holds 150 balls. You can bring your own or add a can of balls for +$5 when booking.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>How does the deposit work?</h3>
+                    <p>We place a $300 hold on your card via Stripe (not charged). Once you return the machine undamaged, the hold is released within 24 hours.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is the machine difficult to use?</h3>
+                    <p>Not at all! We provide a quick tutorial video, and you can also get a demo when picking up. Most people are ready to play in 5 minutes.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I use it on any tennis court?</h3>
+                    <p>Yes! The machine is battery-powered, so no outlet needed. Works on public courts, club courts, or your own court.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Where is the pickup location?</h3>
+                    <p>Pickup is in Newton, MA. Exact address provided after booking confirmation. We also offer delivery within 15 miles for +$25.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What if the machine has issues during my rental?</h3>
+                    <p>Contact us immediately and we'll troubleshoot or arrange a replacement. Your satisfaction is guaranteed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="book" class="booking">
+        <div class="container">
+            <h2 class="section-title">Ready to Practice?</h2>
+            <p class="section-subtitle">Book your tennis ball machine rental now</p>
+            
+            <!-- Cal.com embed will go here -->
+            <div class="booking-embed">
+                <div class="booking-placeholder">
+                    <p>📅 Booking calendar loading...</p>
+                    <p class="booking-note">Select your preferred date and rental duration</p>
+                </div>
+                <!-- Replace with actual Cal.com embed code -->
+                <!-- <cal-inline calLink="your-cal-link"></cal-inline> -->
+            </div>
+
+            <div class="booking-contact">
+                <p>Questions? Contact us:</p>
+                <a href="mailto:hello@servebotrentals.com" class="contact-link">📧 hello@servebotrentals.com</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">🎾</span>
+                    <span class="logo-text">ServeBot Rentals</span>
+                    <p>Greater Boston's tennis ball machine rental service</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#book">Book Now</a>
+                </div>
+                <div class="footer-service">
+                    <h4>Service Area</h4>
+                    <p>Newton, Cambridge, Boston, Brookline, Somerville, Watertown, Waltham, Wellesley, Needham, Lexington, Arlington, Belmont</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 ServeBot Rentals. All rights reserved.</p>
+                <div class="footer-lang">
+                    <a href="index.html" class="active">English</a>
+                    <a href="cn.html">中文</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
