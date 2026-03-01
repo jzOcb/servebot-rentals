@@ -1,6 +1,7 @@
 {
-  "buildCommand": "",
-  "outputDirectory": ".",
+  "buildCommand": "cp index.html cn.html book.html confirmation.html styles.css public/ 2>/dev/null || true",
+  "installCommand": "npm install",
+  "outputDirectory": "public",
   "functions": {
     "api/**/*.js": {
       "runtime": "@vercel/node@3"

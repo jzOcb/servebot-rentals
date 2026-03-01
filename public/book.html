@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Rental | ServeBot Rentals</title>
+    <meta name="description" content="Book a tennis ball machine rental in Greater Boston. Select your dates and complete your booking.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FullCalendar -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    <style>
+        .booking-page {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+        
+        .booking-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .booking-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .booking-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .calendar-section h3,
+        .form-section h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        #calendar {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        /* FullCalendar custom styles */
+        .fc {
+            --fc-border-color: rgba(255,255,255,0.1);
+            --fc-button-bg-color: var(--primary);
+            --fc-button-border-color: var(--primary);
+            --fc-button-hover-bg-color: var(--primary-dark);
+            --fc-button-hover-border-color: var(--primary-dark);
+            --fc-button-active-bg-color: var(--primary-dark);
+            --fc-today-bg-color: rgba(76, 175, 80, 0.1);
+            --fc-event-bg-color: var(--primary);
+            --fc-event-border-color: var(--primary);
+        }
+        
+        .fc-theme-standard td, 
+        .fc-theme-standard th {
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        .fc-day-available {
+            background: rgba(76, 175, 80, 0.2) !important;
+            cursor: pointer;
+        }
+        
+        .fc-day-available:hover {
+            background: rgba(76, 175, 80, 0.4) !important;
+        }
+        
+        .fc-day-unavailable {
+            background: rgba(255, 255, 255, 0.03) !important;
+            color: #666 !important;
+        }
+        
+        .fc-day-selected {
+            background: var(--primary) !important;
+        }
+        
+        .fc-daygrid-day-number {
+            color: var(--light);
+        }
+        
+        .fc-col-header-cell-cushion {
+            color: var(--light);
+        }
+        
+        .rental-type-selector {
+            margin-bottom: 20px;
+        }
+        
+        .rental-type-selector label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .rental-type-selector select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 16px;
+        }
+        
+        .price-display {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .price-row.total {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 8px;
+            margin-top: 8px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .selected-date {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .selected-date .label {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        .selected-date .value {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
+        
+        .error-message {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff4444;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            color: #ff4444;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">🎾</span>
+                <span class="logo-text">ServeBot</span>
+            </a>
+            <div class="nav-links">
+                <a href="/#pricing">Pricing</a>
+                <a href="/#how-it-works">How It Works</a>
+                <a href="/#faq">FAQ</a>
+                <a href="cn-book.html" class="lang-switch">中文</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="booking-page">
+        <div class="booking-container">
+            <h1>Book Your Rental</h1>
+            <p class="section-subtitle">Select your rental type and pick an available date</p>
+
+            <div id="error-container" class="error-message hidden"></div>
+
+            <div class="booking-grid">
+                <!-- Calendar Section -->
+                <div class="calendar-section">
+                    <div class="rental-type-selector">
+                        <label for="rental-type">Rental Type</label>
+                        <select id="rental-type">
+                            <option value="half_day_weekday" data-price="45">Half Day Weekday - $45</option>
+                            <option value="full_day_weekday" data-price="75" selected>Full Day Weekday - $75</option>
+                            <option value="half_day_weekend" data-price="55">Half Day Weekend - $55</option>
+                            <option value="full_day_weekend" data-price="100">Full Day Weekend - $100</option>
+                            <option value="weekend_package" data-price="175">Weekend Package (Sat+Sun) - $175</option>
+                            <option value="weekly" data-price="350">Weekly - $350</option>
+                        </select>
+                    </div>
+                    
+                    <h3>Select Date</h3>
+                    <div id="calendar-loading" class="loading">Loading available dates...</div>
+                    <div id="calendar"></div>
+                </div>
+
+                <!-- Form Section -->
+                <div class="form-section">
+                    <h3>Your Information</h3>
+                    
+                    <div id="selected-date-display" class="selected-date hidden">
+                        <div class="label">Selected Date</div>
+                        <div class="value" id="selected-date-value">-</div>
+                    </div>
+
+                    <form id="booking-form" class="booking-form">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pickup-delivery">Pickup or Delivery *</label>
+                            <select id="pickup-delivery" name="pickup_delivery" required>
+                                <option value="pickup">Pickup in Newton (Free)</option>
+                                <option value="delivery">Delivery within 15 miles (+$25)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group hidden" id="address-group">
+                            <label for="address">Delivery Address *</label>
+                            <input type="text" id="address" name="delivery_address" placeholder="Street, City, ZIP">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notes">Notes (optional)</label>
+                            <textarea id="notes" name="notes" rows="2" placeholder="Any special requests?"></textarea>
+                        </div>
+
+                        <div class="price-display">
+                            <div class="price-row">
+                                <span>Rental</span>
+                                <span id="rental-price">$75</span>
+                            </div>
+                            <div class="price-row">
+                                <span>Security Deposit (refundable)</span>
+                                <span>$300</span>
+                            </div>
+                            <div class="price-row hidden" id="delivery-fee-row">
+                                <span>Delivery Fee</span>
+                                <span>$25</span>
+                            </div>
+                            <div class="price-row total">
+                                <span>Total</span>
+                                <span id="total-price">$375</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-large" id="submit-btn" disabled>
+                            Select a Date First
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Configuration
+        const API_BASE = '/api';
+        const DEPOSIT = 300;
+        const DELIVERY_FEE = 25;
+
+        // State
+        let selectedDate = null;
+        let availableDates = [];
+        let calendar = null;
+
+        // DOM Elements
+        const rentalTypeSelect = document.getElementById('rental-type');
+        const pickupDeliverySelect = document.getElementById('pickup-delivery');
+        const addressGroup = document.getElementById('address-group');
+        const addressInput = document.getElementById('address');
+        const deliveryFeeRow = document.getElementById('delivery-fee-row');
+        const rentalPriceSpan = document.getElementById('rental-price');
+        const totalPriceSpan = document.getElementById('total-price');
+        const selectedDateDisplay = document.getElementById('selected-date-display');
+        const selectedDateValue = document.getElementById('selected-date-value');
+        const submitBtn = document.getElementById('submit-btn');
+        const bookingForm = document.getElementById('booking-form');
+        const errorContainer = document.getElementById('error-container');
+        const calendarLoading = document.getElementById('calendar-loading');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initCalendar();
+            loadAvailability();
+            
+            rentalTypeSelect.addEventListener('change', () => {
+                updatePricing();
+                loadAvailability();
+                clearSelection();
+            });
+            
+            pickupDeliverySelect.addEventListener('change', () => {
+                const isDelivery = pickupDeliverySelect.value === 'delivery';
+                addressGroup.classList.toggle('hidden', !isDelivery);
+                deliveryFeeRow.classList.toggle('hidden', !isDelivery);
+                addressInput.required = isDelivery;
+                updatePricing();
+            });
+            
+            bookingForm.addEventListener('submit', handleSubmit);
+        });
+
+        function initCalendar() {
+            const calendarEl = document.getElementById('calendar');
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: ''
+                },
+                validRange: {
+                    start: new Date().toISOString().split('T')[0]
+                },
+                dateClick: function(info) {
+                    if (availableDates.includes(info.dateStr)) {
+                        selectDate(info.dateStr);
+                    }
+                },
+                dayCellDidMount: function(info) {
+                    const dateStr = info.date.toISOString().split('T')[0];
+                    if (availableDates.includes(dateStr)) {
+                        info.el.classList.add('fc-day-available');
+                    } else {
+                        info.el.classList.add('fc-day-unavailable');
+                    }
+                    if (dateStr === selectedDate) {
+                        info.el.classList.add('fc-day-selected');
+                    }
+                }
+            });
+            calendar.render();
+        }
+
+        async function loadAvailability() {
+            const rentalType = rentalTypeSelect.value;
+            calendarLoading.classList.remove('hidden');
+            
+            try {
+                const response = await fetch(
+                    `${API_BASE}/availability?type=${rentalType}`
+                );
+                const data = await response.json();
+                
+                if (data.error) {
+                    showError(data.error);
+                    return;
+                }
+                
+                availableDates = data.available_dates || [];
+                calendar.render(); // Re-render to update available dates
+                calendarLoading.classList.add('hidden');
+                
+            } catch (error) {
+                console.error('Failed to load availability:', error);
+                showError('Failed to load availability. Please refresh the page.');
+                calendarLoading.classList.add('hidden');
+            }
+        }
+
+        function selectDate(dateStr) {
+            selectedDate = dateStr;
+            
+            // Update display
+            const date = new Date(dateStr + 'T12:00:00');
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            selectedDateValue.textContent = date.toLocaleDateString('en-US', options);
+            selectedDateDisplay.classList.remove('hidden');
+            
+            // Update button
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Proceed to Payment';
+            
+            // Re-render calendar to show selection
+            calendar.render();
+        }
+
+        function clearSelection() {
+            selectedDate = null;
+            selectedDateDisplay.classList.add('hidden');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Select a Date First';
+        }
+
+        function updatePricing() {
+            const option = rentalTypeSelect.selectedOptions[0];
+            const rentalPrice = parseInt(option.dataset.price);
+            const isDelivery = pickupDeliverySelect.value === 'delivery';
+            
+            rentalPriceSpan.textContent = `$${rentalPrice}`;
+            
+            let total = rentalPrice + DEPOSIT;
+            if (isDelivery) {
+                total += DELIVERY_FEE;
+            }
+            
+            totalPriceSpan.textContent = `$${total}`;
+        }
+
+        function showError(message) {
+            errorContainer.textContent = message;
+            errorContainer.classList.remove('hidden');
+            setTimeout(() => {
+                errorContainer.classList.add('hidden');
+            }, 5000);
+        }
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+            
+            if (!selectedDate) {
+                showError('Please select a date first');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+
+            const formData = {
+                customer_name: document.getElementById('name').value,
+                customer_email: document.getElementById('email').value,
+                customer_phone: document.getElementById('phone').value,
+                rental_type: rentalTypeSelect.value,
+                start_date: selectedDate,
+                pickup_delivery: pickupDeliverySelect.value,
+                delivery_address: pickupDeliverySelect.value === 'delivery' 
+                    ? document.getElementById('address').value 
+                    : null,
+                notes: document.getElementById('notes').value || null
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/bookings`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    showError(data.error);
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Proceed to Payment';
+                    return;
+                }
+
+                // Redirect to Stripe Checkout
+                if (data.checkout_url) {
+                    window.location.href = data.checkout_url;
+                }
+
+            } catch (error) {
+                console.error('Booking failed:', error);
+                showError('Failed to create booking. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Proceed to Payment';
+            }
+        }
+    </script>
+</body>
+</html>
