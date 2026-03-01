@@ -889,3 +889,22 @@ section {
         gap: 16px;
     }
 }
+
+/* Mobile menu active state */
+@media (max-width: 968px) {
+    .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(26, 26, 26, 0.98);
+        padding: 20px;
+        gap: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .mobile-menu-btn.active {
+        color: var(--primary);
+    }
+}
