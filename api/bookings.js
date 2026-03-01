@@ -26,7 +26,15 @@ const DELIVERY_FEE = 2500; // $25 in cents
 
 export default async function handler(req, res) {
     // CORS headers
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    const allowedOrigins = [
+        'https://servebot-rentals.vercel.app',
+        'https://servebotrentals.com',
+        'http://localhost:3000'
+    ];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     
@@ -54,6 +62,23 @@ export default async function handler(req, res) {
         if (!customer_name || !customer_email || !customer_phone || 
             !rental_type || !start_date || !pickup_delivery) {
             return res.status(400).json({ error: 'Missing required fields' });
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(customer_email)) {
+            return res.status(400).json({ error: 'Invalid email format' });
+        }
+
+        // Validate pickup_delivery value
+        if (!['pickup', 'delivery'].includes(pickup_delivery)) {
+            return res.status(400).json({ error: 'Invalid pickup/delivery option' });
+        }
+
+        // Validate start_date is not in the past
+        const today = new Date().toISOString().split('T')[0];
+        if (start_date < today) {
+            return res.status(400).json({ error: 'Start date cannot be in the past' });
         }
 
         // Validate rental type

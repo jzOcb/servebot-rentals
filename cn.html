@@ -25,7 +25,7 @@
                 <a href="#how-it-works">租赁流程</a>
                 <a href="#faq">常见问题</a>
                 <a href="index.html" class="lang-switch">English</a>
-                <a href="#book" class="btn btn-primary">立即预约</a>
+                <a href="book.html" class="btn btn-primary">立即预约</a>
             </div>
             <button class="mobile-menu-btn" aria-label="菜单">
                 <span></span>
@@ -42,7 +42,7 @@
             <h1>网球练习，<br><span class="highlight">从此简单。</span></h1>
             <p class="hero-subtitle">大波士顿地区首选网球发球机租赁服务<br>随时练球，不需要球友，不用花$2,000购买</p>
             <div class="hero-buttons">
-                <a href="#book" class="btn btn-primary btn-large">立即预约</a>
+                <a href="book.html" class="btn btn-primary btn-large">立即预约</a>
                 <a href="#pricing" class="btn btn-secondary btn-large">查看价格</a>
             </div>
             <div class="hero-stats">
@@ -111,7 +111,7 @@
                         <li>✓ 支持App连接</li>
                         <li>✓ 提供使用教程</li>
                     </ul>
-                    <a href="#book" class="btn btn-outline">选择</a>
+                    <a href="book.html" class="btn btn-outline">选择</a>
                 </div>
 
                 <div class="pricing-card featured">
@@ -130,7 +130,7 @@
                         <li>✓ 练多久都可以</li>
                         <li>✓ 适合认真训练</li>
                     </ul>
-                    <a href="#book" class="btn btn-primary">选择</a>
+                    <a href="book.html" class="btn btn-primary">选择</a>
                 </div>
 
                 <div class="pricing-card">
@@ -148,7 +148,7 @@
                         <li>✓ 周一早还机</li>
                         <li>✓ 周末练球首选</li>
                     </ul>
-                    <a href="#book" class="btn btn-outline">选择</a>
+                    <a href="book.html" class="btn btn-outline">选择</a>
                 </div>
             </div>
 
@@ -172,7 +172,7 @@
                         <span class="extra-price">$300 <span class="note">(可退还)</span></span>
                     </div>
                 </div>
-                <p class="rent-to-own">💡 <strong>租金可抵购买：</strong>您的租金可以抵扣购买价格。<a href="#contact">联系我们</a>了解详情。</p>
+                <p class="rent-to-own">💡 <strong>租金可抵购买：</strong>您的租金可以抵扣购买价格。<a href="mailto:zuo.djason@gmail.com">联系我们</a>了解详情。</p>
             </div>
         </div>
     </section>
@@ -326,78 +326,13 @@
             <h2 class="section-title">准备好练球了吗？</h2>
             <p class="section-subtitle">现在就预约您的网球发球机</p>
             
-            <!-- Booking Form -->
-            <div class="booking-form-container">
-                <form class="booking-form" action="https://formspree.io/f/xbdakwad" method="POST">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">姓名 *</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">邮箱 *</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="phone">电话 *</label>
-                            <input type="tel" id="phone" name="phone" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="rental-type">租赁类型 *</label>
-                            <select id="rental-type" name="rental_type" required>
-                                <option value="">请选择...</option>
-                                <option value="工作日半天 - $45">工作日半天 - $45</option>
-                                <option value="工作日全天 - $75">工作日全天 - $75</option>
-                                <option value="周末半天 - $55">周末半天 - $55</option>
-                                <option value="周末全天 - $100">周末全天 - $100</option>
-                                <option value="周末套餐(周六+周日) - $175">周末套餐(周六+周日) - $175</option>
-                                <option value="周租 - $350">周租 - $350</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="start-date">开始日期 *</label>
-                            <input type="date" id="start-date" name="start_date" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="end-date">结束日期</label>
-                            <input type="date" id="end-date" name="end_date">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="pickup-delivery">自取或送货 *</label>
-                        <select id="pickup-delivery" name="pickup_delivery" required>
-                            <option value="">请选择...</option>
-                            <option value="Newton自取 (免费)">Newton自取 (免费)</option>
-                            <option value="送货上门 (+$25)">送货上门 15英里内 (+$25)</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group" id="address-group" style="display:none;">
-                        <label for="address">送货地址</label>
-                        <input type="text" id="address" name="delivery_address" placeholder="街道, 城市, 邮编">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="notes">备注 (可选)</label>
-                        <textarea id="notes" name="notes" rows="3" placeholder="任何问题或特殊要求?"></textarea>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-large">提交预约申请</button>
-                    
-                    <p class="form-note">我们会在24小时内确认可用性并发送付款链接。<br>需要 $300 可退还押金。</p>
-                </form>
+            <div style="text-align: center; margin: 40px 0;">
+                <a href="book.html" class="btn btn-primary btn-large">在线预约</a>
             </div>
 
             <div class="booking-contact">
                 <p>有问题？联系我们：</p>
-                <a href="mailto:hello@servebotrentals.com" class="contact-link">📧 hello@servebotrentals.com</a>
+                <a href="mailto:zuo.djason@gmail.com" class="contact-link">📧 zuo.djason@gmail.com</a>
             </div>
         </div>
     </section>
@@ -416,7 +351,7 @@
                     <a href="#pricing">价格</a>
                     <a href="#how-it-works">租赁流程</a>
                     <a href="#faq">常见问题</a>
-                    <a href="#book">立即预约</a>
+                    <a href="book.html">立即预约</a>
                 </div>
                 <div class="footer-service">
                     <h4>服务范围</h4>

@@ -31,17 +31,23 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    if (!webhookSecret) {
+        console.error('STRIPE_WEBHOOK_SECRET is not configured. Rejecting webhook.');
+        return res.status(500).json({ error: 'Webhook secret not configured' });
+    }
+
     const rawBody = await getRawBody(req);
     const sig = req.headers['stripe-signature'];
+
+    if (!sig) {
+        return res.status(400).json({ error: 'Missing stripe-signature header' });
+    }
 
     let event;
 
     try {
-        event = stripe.webhooks.constructEvent(
-            rawBody,
-            sig,
-            process.env.STRIPE_WEBHOOK_SECRET
-        );
+        event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
     } catch (err) {
         console.error('Webhook signature verification failed:', err.message);
         return res.status(400).json({ error: `Webhook Error: ${err.message}` });
