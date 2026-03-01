@@ -226,32 +226,9 @@
                     </ul>
                 </div>
                 <div class="machine-image">
-                    <div class="video-carousel">
-                        <div class="video-slide active" data-index="0">
-                            <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
-                                <iframe src="https://www.youtube.com/embed/GWMmkRIg4-I" title="网球发球机演示" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;"></iframe>
-                            </div>
-                        </div>
-                        <div class="video-slide" data-index="1" style="display:none;">
-                            <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;max-width:300px;margin:0 auto;">
-                                <iframe src="https://www.youtube.com/embed/RmnXh6hrH34" title="发球机实拍" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;"></iframe>
-                            </div>
-                        </div>
-                        <div class="carousel-controls" style="display:flex;justify-content:center;gap:12px;margin-top:12px;">
-                            <button onclick="showSlide(0)" class="carousel-dot active-dot" style="width:12px;height:12px;border-radius:50%;border:none;background:var(--primary);cursor:pointer;"></button>
-                            <button onclick="showSlide(1)" class="carousel-dot" style="width:12px;height:12px;border-radius:50%;border:none;background:rgba(255,255,255,0.3);cursor:pointer;"></button>
-                        </div>
+                    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
+                        <iframe src="https://www.youtube.com/embed/GWMmkRIg4-I?rel=0" title="网球发球机演示" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;"></iframe>
                     </div>
-                    <script>
-                        function showSlide(index) {
-                            document.querySelectorAll('.video-slide').forEach(s => s.style.display = 'none');
-                            document.querySelectorAll('.carousel-dot').forEach(d => { d.style.background = 'rgba(255,255,255,0.3)'; d.classList.remove('active-dot'); });
-                            const slide = document.querySelector('.video-slide[data-index="' + index + '"]');
-                            const dot = document.querySelectorAll('.carousel-dot')[index];
-                            if (slide) slide.style.display = 'block';
-                            if (dot) { dot.style.background = 'var(--primary)'; dot.classList.add('active-dot'); }
-                        }
-                    </script>
                 </div>
             </div>
         </div>
