@@ -1,5 +1,6 @@
 // POST /api/webhooks/stripe
 // Handles Stripe webhook events
+// Payment-first: creates booking in DB only after successful payment
 
 import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
@@ -11,7 +12,6 @@ const supabase = createClient(
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Disable body parsing, need raw body for webhook verification
 export const config = {
     api: {
         bodyParser: false
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
 
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
     if (!webhookSecret) {
-        console.error('STRIPE_WEBHOOK_SECRET is not configured. Rejecting webhook.');
+        console.error('STRIPE_WEBHOOK_SECRET is not configured.');
         return res.status(500).json({ error: 'Webhook secret not configured' });
     }
 
@@ -53,57 +53,45 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: `Webhook Error: ${err.message}` });
     }
 
-    // Handle the event
     switch (event.type) {
         case 'checkout.session.completed': {
             const session = event.data.object;
-            const bookingId = session.metadata?.booking_id;
+            const meta = session.metadata || {};
 
-            if (bookingId) {
-                // Update booking status to confirmed
-                const { error } = await supabase
+            // Payment-first: create booking from metadata
+            if (meta.customer_name && meta.start_date) {
+                const { data: booking, error } = await supabase
                     .from('bookings')
-                    .update({
+                    .insert({
+                        customer_name: meta.customer_name,
+                        customer_email: meta.customer_email,
+                        customer_phone: meta.customer_phone,
+                        rental_type: meta.rental_type,
+                        start_date: meta.start_date,
+                        end_date: meta.end_date,
+                        pickup_delivery: meta.pickup_delivery,
+                        delivery_address: meta.delivery_address || null,
+                        total_amount: parseInt(meta.total_amount, 10),
+                        deposit_amount: parseInt(meta.deposit_amount, 10),
                         status: 'confirmed',
-                        stripe_payment_intent: session.payment_intent
+                        stripe_session_id: session.id,
+                        stripe_payment_intent: session.payment_intent,
+                        notes: meta.notes || null
                     })
-                    .eq('id', bookingId);
+                    .select()
+                    .single();
 
                 if (error) {
-                    console.error('Failed to update booking:', error);
+                    console.error('Failed to create booking from webhook:', error);
                 } else {
-                    console.log(`Booking ${bookingId} confirmed`);
-                    
-                    // TODO: Send confirmation email
-                    // await sendConfirmationEmail(bookingId);
-                    
-                    // TODO: Send notification to owner
-                    // await notifyOwner(bookingId);
+                    console.log(`Booking ${booking.id} created and confirmed`);
                 }
-            }
-            break;
-        }
-
-        case 'checkout.session.expired': {
-            const session = event.data.object;
-            const bookingId = session.metadata?.booking_id;
-
-            if (bookingId) {
-                // Cancel the pending booking
-                await supabase
-                    .from('bookings')
-                    .update({ status: 'cancelled' })
-                    .eq('id', bookingId)
-                    .eq('status', 'pending');
-
-                console.log(`Booking ${bookingId} cancelled (session expired)`);
             }
             break;
         }
 
         case 'charge.refunded': {
             const charge = event.data.object;
-            // Handle deposit refund if needed
             console.log('Charge refunded:', charge.id);
             break;
         }

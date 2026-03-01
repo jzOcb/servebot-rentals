@@ -130,12 +130,38 @@
     </section>
 
     <script>
-        // Get booking ID from URL
         const params = new URLSearchParams(window.location.search);
-        const bookingId = params.get('booking_id');
-        
-        if (bookingId) {
-            document.getElementById('booking-id').textContent = bookingId.substring(0, 8) + '...';
+        const sessionId = params.get('session_id');
+
+        if (sessionId) {
+            let attempts = 0;
+            const maxAttempts = 10;
+
+            async function checkStatus() {
+                try {
+                    const resp = await fetch('/api/booking-status?session_id=' + encodeURIComponent(sessionId));
+                    const data = await resp.json();
+
+                    if (data.status === 'confirmed') {
+                        document.getElementById('booking-id').textContent = data.booking_id ? data.booking_id.substring(0, 8) + '...' : 'Confirmed';
+                        document.querySelector('.confirmation-icon').textContent = '✅';
+                        document.querySelector('.confirmation-card h1').textContent = 'Booking Confirmed!';
+                        document.querySelector('.confirmation-card p').textContent = 'Thank you for your reservation. You will receive a confirmation email shortly.';
+                    } else if (attempts < maxAttempts) {
+                        attempts++;
+                        document.querySelector('.confirmation-card h1').textContent = 'Processing Payment...';
+                        document.querySelector('.confirmation-icon').textContent = '⏳';
+                        setTimeout(checkStatus, 2000);
+                    } else {
+                        document.querySelector('.confirmation-card h1').textContent = 'Payment Received';
+                        document.querySelector('.confirmation-card p').textContent = 'Your booking is being processed. You will receive a confirmation email shortly.';
+                    }
+                } catch (e) {
+                    console.error('Status check failed:', e);
+                }
+            }
+
+            checkStatus();
         }
     </script>
 </body>

@@ -46,8 +46,8 @@ export default async function handler(req, res) {
         const { start, end, type } = req.query;
         
         // Default to next 90 days if not specified
-        const startDate = start || new Date().toISOString().split('T')[0];
-        const endDate = end || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        const startDate = start || new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+        const endDate = end || (() => { const d = new Date(); d.setDate(d.getDate() + 90); return d.toLocaleDateString('en-CA', { timeZone: 'America/New_York' }); })();
         const rentalType = type || 'full_day_weekday';
 
         const config = PRICING[rentalType];
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
         const { data: bookings, error: bookingsError } = await supabase
             .from('bookings')
             .select('start_date, end_date')
-            .in('status', ['pending', 'confirmed', 'in_progress'])
+            .in('status', ['confirmed', 'in_progress'])
             .lte('start_date', endDate)
             .gte('end_date', startDate);
 
