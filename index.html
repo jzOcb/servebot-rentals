@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ServeBot Rentals | Tennis Ball Machine Rental in Boston</title>
     <meta name="description" content="Rent professional tennis ball machines in Greater Boston. Practice anytime, no partner needed. Starting at $45/half-day. Pickup in Newton or delivery available.">
+    <link rel="canonical" href="https://servebot-rentals.vercel.app/">
+    <link rel="alternate" hreflang="en" href="https://servebot-rentals.vercel.app/">
+    <link rel="alternate" hreflang="zh" href="https://servebot-rentals.vercel.app/cn.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ServeBot Rentals | Tennis Ball Machine Rental in Boston">
+    <meta property="og:description" content="Rent professional tennis ball machines in Greater Boston. Practice anytime, no partner needed. Starting at $45/half-day.">
+    <meta property="og:url" content="https://servebot-rentals.vercel.app/">
+    <meta property="og:image" content="https://servebot-rentals.vercel.app/og-image.png">
+    <meta property="og:site_name" content="ServeBot Rentals">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ServeBot Rentals | Tennis Ball Machine Rental in Boston">
+    <meta name="twitter:description" content="Rent professional tennis ball machines in Greater Boston. Starting at $45/half-day.">
+    <meta name="twitter:image" content="https://servebot-rentals.vercel.app/og-image.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -389,6 +404,127 @@
                 });
             });
         }
+    </script>
+
+    <!-- LocalBusiness Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "ServeBot Rentals",
+      "description": "Professional tennis ball machine rental service in Greater Boston. Practice anytime, no partner needed.",
+      "url": "https://servebot-rentals.vercel.app",
+      "email": "jzclaws1@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Newton",
+        "addressRegion": "MA",
+        "addressCountry": "US"
+      },
+      "areaServed": [
+        {"@type": "City", "name": "Newton, MA"},
+        {"@type": "City", "name": "Cambridge, MA"},
+        {"@type": "City", "name": "Boston, MA"},
+        {"@type": "City", "name": "Brookline, MA"},
+        {"@type": "City", "name": "Somerville, MA"},
+        {"@type": "City", "name": "Watertown, MA"},
+        {"@type": "City", "name": "Waltham, MA"},
+        {"@type": "City", "name": "Wellesley, MA"},
+        {"@type": "City", "name": "Needham, MA"},
+        {"@type": "City", "name": "Lexington, MA"},
+        {"@type": "City", "name": "Arlington, MA"},
+        {"@type": "City", "name": "Belmont, MA"}
+      ],
+      "priceRange": "$$",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Tennis Ball Machine Rental",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Half Day Tennis Ball Machine Rental",
+              "description": "4 hours of tennis ball machine rental"
+            },
+            "price": "45.00",
+            "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Full Day Tennis Ball Machine Rental",
+              "description": "Full day tennis ball machine rental"
+            },
+            "price": "75.00",
+            "priceCurrency": "USD"
+          }
+        ]
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "4"
+      }
+    }
+    </script>
+    <!-- FAQ Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do I need to bring my own tennis balls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The machine holds 150 balls. You can bring your own or add a can of balls for +$5 when booking."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the deposit work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We charge a $300 refundable deposit via Stripe. Once you return the machine undamaged, the deposit is refunded within 24 hours."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the machine difficult to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not at all! We provide a quick tutorial video, and you can also get a demo when picking up. Most people are ready to play in 5 minutes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use it on any tennis court?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! The machine is battery-powered, so no outlet needed. Works on public courts, club courts, or your own court."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is the pickup location?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pickup is in Newton, MA. Exact address provided after booking confirmation. We also offer delivery within 15 miles for +$25."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if the machine has issues during my rental?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Contact us immediately and we'll troubleshoot or arrange a replacement. Your satisfaction is guaranteed."
+          }
+        }
+      ]
+    }
     </script>
 </body>
 </html>
