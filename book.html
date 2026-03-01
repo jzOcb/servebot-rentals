@@ -81,6 +81,11 @@
         
         .fc-day-selected {
             background: var(--primary) !important;
+            border-radius: 4px;
+        }
+        .fc-day-selected .fc-daygrid-day-number {
+            color: #fff !important;
+            font-weight: 700;
         }
         
         .fc-daygrid-day-number {
@@ -406,8 +411,10 @@
             submitBtn.disabled = false;
             submitBtn.textContent = 'Proceed to Payment';
             
-            // Re-render calendar to show selection
-            calendar.render();
+            // Highlight selected date
+            document.querySelectorAll('.fc-day-selected').forEach(el => el.classList.remove('fc-day-selected'));
+            const cell = document.querySelector(`[data-date="${dateStr}"]`);
+            if (cell) cell.classList.add('fc-day-selected');
         }
 
         function clearSelection() {
