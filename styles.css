@@ -331,6 +331,8 @@ section {
     padding: 32px;
     position: relative;
     transition: transform 0.3s, border-color 0.3s;
+    display: flex;
+    flex-direction: column;
 }
 
 .pricing-card:hover {
@@ -391,6 +393,10 @@ section {
     padding: 8px 0;
     color: rgba(255,255,255,0.8);
     font-size: 14px;
+}
+
+.pricing-card ul {
+    flex: 1;
 }
 
 .pricing-card .btn {
