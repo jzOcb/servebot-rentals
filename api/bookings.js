@@ -1,10 +1,17 @@
 // POST /api/bookings
-// Validates booking input and creates Stripe checkout session
-// No database insert here — booking is created in webhook after payment
+// Validates booking input, rate-limits requests, reserves a machine atomically,
+// and creates a Stripe checkout session.
 
+import { randomUUID } from 'node:crypto';
+import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_ANON_KEY
+);
 
 // Pricing configuration (in cents)
 const PRICING = {
@@ -18,26 +25,72 @@ const PRICING = {
 
 const DEPOSIT_AMOUNT = 30000; // $300 in cents
 const DELIVERY_FEE = 2500; // $25 in cents
+const CORS_ORIGIN = 'https://servebot-rentals.vercel.app';
 
-// Get today's date in Eastern time as YYYY-MM-DD
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+const RATE_LIMIT_MAX = 5;
+const rateLimitByIp = new Map();
+let lastRateLimitCleanup = 0;
+
 function getTodayET() {
     return new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
 }
 
-export default async function handler(req, res) {
-    // CORS headers
-    const allowedOrigins = [
-        'https://servebot-rentals.vercel.app',
-        'https://servebotrentals.com',
-        'http://localhost:3000'
-    ];
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
+function addDays(dateStr, daysToAdd) {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const dt = new Date(Date.UTC(year, month - 1, day));
+    dt.setUTCDate(dt.getUTCDate() + daysToAdd);
+    return dt.toISOString().slice(0, 10);
+}
+
+function getClientIp(req) {
+    const forwarded = req.headers['x-forwarded-for'];
+    if (typeof forwarded === 'string' && forwarded.length > 0) {
+        return forwarded.split(',')[0].trim();
     }
+    return req.socket?.remoteAddress || 'unknown';
+}
+
+function cleanupRateLimit(now) {
+    if (now - lastRateLimitCleanup < 10 * 60 * 1000) {
+        return;
+    }
+
+    for (const [ip, entry] of rateLimitByIp.entries()) {
+        if (entry.expiresAt <= now) {
+            rateLimitByIp.delete(ip);
+        }
+    }
+
+    lastRateLimitCleanup = now;
+}
+
+function isRateLimited(ip, now) {
+    cleanupRateLimit(now);
+
+    const existing = rateLimitByIp.get(ip);
+    if (!existing || existing.expiresAt <= now) {
+        rateLimitByIp.set(ip, { count: 1, expiresAt: now + RATE_LIMIT_WINDOW_MS });
+        return false;
+    }
+
+    if (existing.count >= RATE_LIMIT_MAX) {
+        return true;
+    }
+
+    existing.count += 1;
+    return false;
+}
+
+function normalizeRequiredString(value) {
+    return typeof value === 'string' ? value.trim() : '';
+}
+
+export default async function handler(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', CORS_ORIGIN);
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    
+
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
@@ -47,83 +100,90 @@ export default async function handler(req, res) {
     }
 
     try {
-        const {
-            customer_name,
-            customer_email,
-            customer_phone,
-            rental_type,
-            start_date,
-            pickup_delivery,
-            delivery_address,
-            notes
-        } = req.body;
+        const clientIp = getClientIp(req);
+        const now = Date.now();
 
-        // Validate required fields
-        if (!customer_name || !customer_email || !customer_phone || 
-            !rental_type || !start_date || !pickup_delivery) {
+        if (isRateLimited(clientIp, now)) {
+            return res.status(429).json({ error: 'Too many booking attempts. Please try again later.' });
+        }
+
+        const customer_name = normalizeRequiredString(req.body.customer_name);
+        const customer_email = normalizeRequiredString(req.body.customer_email).toLowerCase();
+        const customer_phone = normalizeRequiredString(req.body.customer_phone);
+        const rental_type = normalizeRequiredString(req.body.rental_type);
+        const start_date = normalizeRequiredString(req.body.start_date);
+        const pickup_delivery = normalizeRequiredString(req.body.pickup_delivery);
+        const delivery_address = typeof req.body.delivery_address === 'string' ? req.body.delivery_address.trim() : '';
+        const notes = typeof req.body.notes === 'string' ? req.body.notes.trim() : '';
+
+        if (!customer_name || !customer_email || !customer_phone || !rental_type || !start_date || !pickup_delivery) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
-        // Name: max 100 chars
-        if (typeof customer_name !== 'string' || customer_name.length > 100) {
+        if (customer_name.length > 100) {
             return res.status(400).json({ error: 'Name must be 100 characters or less' });
         }
 
-        // Email regex validation
+        if (customer_email.length > 254) {
+            return res.status(400).json({ error: 'Email must be 254 characters or less' });
+        }
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(customer_email)) {
             return res.status(400).json({ error: 'Invalid email format' });
         }
 
-        // Phone: digits only, 10-15 chars
+        if (customer_phone.length > 20) {
+            return res.status(400).json({ error: 'Phone must be 20 characters or less' });
+        }
+
+        const phoneRegex = /^\+?[0-9().\-\s]{10,20}$/;
         const phoneDigits = customer_phone.replace(/\D/g, '');
-        if (phoneDigits.length < 10 || phoneDigits.length > 15) {
-            return res.status(400).json({ error: 'Phone must be 10-15 digits' });
+        if (!phoneRegex.test(customer_phone) || phoneDigits.length < 10 || phoneDigits.length > 15) {
+            return res.status(400).json({ error: 'Invalid phone format' });
         }
 
-        // Notes: max 500 chars
-        if (notes && (typeof notes !== 'string' || notes.length > 500)) {
-            return res.status(400).json({ error: 'Notes must be 500 characters or less' });
-        }
-
-        // Validate pickup_delivery value
         if (!['pickup', 'delivery'].includes(pickup_delivery)) {
             return res.status(400).json({ error: 'Invalid pickup/delivery option' });
         }
 
-        // Validate start_date format and not in the past (Eastern time)
+        if (delivery_address.length > 200) {
+            return res.status(400).json({ error: 'Delivery address must be 200 characters or less' });
+        }
+
+        if (notes.length > 500) {
+            return res.status(400).json({ error: 'Notes must be 500 characters or less' });
+        }
+
+        if (pickup_delivery === 'delivery' && !delivery_address) {
+            return res.status(400).json({ error: 'Delivery address required for delivery' });
+        }
+
         if (!/^\d{4}-\d{2}-\d{2}$/.test(start_date)) {
             return res.status(400).json({ error: 'Invalid date format' });
         }
+
         const today = getTodayET();
         if (start_date < today) {
             return res.status(400).json({ error: 'Start date cannot be in the past' });
         }
 
-        // Validate rental type
         const config = PRICING[rental_type];
         if (!config) {
             return res.status(400).json({ error: 'Invalid rental type' });
         }
 
-        // Validate delivery address if delivery selected
-        if (pickup_delivery === 'delivery' && !delivery_address) {
-            return res.status(400).json({ error: 'Delivery address required for delivery' });
-        }
+        const end_date = addDays(start_date, config.days - 1);
 
-        // Calculate end date based on rental type
-        const startDateObj = new Date(start_date + 'T12:00:00');
-        const endDateObj = new Date(startDateObj);
-        endDateObj.setDate(endDateObj.getDate() + config.days - 1);
-        const end_date = endDateObj.toISOString().split('T')[0];
-
-        // Calculate total
         let totalAmount = config.price + DEPOSIT_AMOUNT;
         if (pickup_delivery === 'delivery') {
             totalAmount += DELIVERY_FEE;
         }
 
-        // Build line items for Stripe
+        const bookingId = randomUUID();
+        const baseUrl = process.env.BASE_URL || CORS_ORIGIN;
+        const expiresAt = Math.floor(Date.now() / 1000) + 30 * 60;
+
         const lineItems = [
             {
                 price_data: {
@@ -163,38 +223,55 @@ export default async function handler(req, res) {
             });
         }
 
-        const baseUrl = process.env.BASE_URL || 'https://servebot-rentals.vercel.app';
-
-        // Stripe checkout expires in 30 minutes
-        const expiresAt = Math.floor(Date.now() / 1000) + 30 * 60;
-
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: lineItems,
             mode: 'payment',
-            success_url: `${baseUrl}/confirmation.html?session_id={CHECKOUT_SESSION_ID}`,
+            success_url: `${baseUrl}/confirmation.html?booking_id=${encodeURIComponent(bookingId)}&session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${baseUrl}/book.html?cancelled=true`,
-            customer_email: customer_email,
+            customer_email,
             expires_at: expiresAt,
             metadata: {
-                customer_name,
-                customer_email,
-                customer_phone: phoneDigits,
-                rental_type,
-                start_date,
-                end_date,
-                pickup_delivery,
-                delivery_address: delivery_address || '',
-                total_amount: String(totalAmount),
-                deposit_amount: String(DEPOSIT_AMOUNT),
-                notes: notes || ''
+                booking_id: bookingId
             }
         });
 
+        const { data: reservedBooking, error: reserveError } = await supabase
+            .rpc('create_pending_booking_atomic', {
+                p_booking_id: bookingId,
+                p_customer_name: customer_name,
+                p_customer_email: customer_email,
+                p_customer_phone: phoneDigits,
+                p_rental_type: rental_type,
+                p_start_date: start_date,
+                p_end_date: end_date,
+                p_pickup_delivery: pickup_delivery,
+                p_delivery_address: delivery_address || null,
+                p_total_amount: totalAmount,
+                p_deposit_amount: DEPOSIT_AMOUNT,
+                p_notes: notes || null,
+                p_stripe_session_id: session.id
+            });
+
+        if (reserveError) {
+            try {
+                await stripe.checkout.sessions.expire(session.id);
+            } catch (expireErr) {
+                console.error('Failed to expire checkout session after reservation failure:', expireErr);
+            }
+
+            if (reserveError.message && reserveError.message.includes('no_available_machine')) {
+                return res.status(409).json({ error: 'No machines available for selected dates' });
+            }
+
+            console.error('Atomic booking reservation error:', reserveError);
+            return res.status(500).json({ error: 'Could not reserve booking slot' });
+        }
+
         return res.status(200).json({
+            booking_id: reservedBooking?.[0]?.booking_id || bookingId,
             checkout_url: session.url
         });
-
     } catch (error) {
         console.error('Booking error:', error);
         return res.status(500).json({ error: 'Internal server error' });

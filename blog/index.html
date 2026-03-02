@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tennis Tips & Guides | ServeBot Rentals Blog</title>
+    <meta name="description" content="Tennis tips, ball machine guides, and local court info from ServeBot Rentals. Improve your game with our expert articles.">
+    <link rel="canonical" href="https://servebot-rentals.vercel.app/blog/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Tennis Tips & Guides | ServeBot Rentals Blog">
+    <meta property="og:description" content="Tennis tips, ball machine guides, and local court info.">
+    <meta property="og:url" content="https://servebot-rentals.vercel.app/blog/">
+    <meta property="og:image" content="https://servebot-rentals.vercel.app/og-image.png">
+    <meta property="og:site_name" content="ServeBot Rentals">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #4CAF50; --primary-dark: #388E3C; --dark: #1a1a1a; --darker: #111111; --light: #ffffff; --gray: #888888; --accent: #7cb342; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--dark); color: var(--light); line-height: 1.6; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(26,26,26,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; text-decoration: none; gap: 8px; }
+        .logo-icon { font-size: 1.5rem; }
+        .logo-text { font-size: 1.25rem; font-weight: 700; color: var(--light); }
+        .nav-links { display: flex; align-items: center; gap: 24px; }
+        .nav-links a { color: var(--gray); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--light); }
+        .btn-primary { background: var(--primary); color: #fff !important; padding: 10px 24px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-block; transition: background 0.2s; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .hero { padding: 120px 20px 60px; text-align: center; }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 12px; }
+        .hero h1 span { color: var(--accent); }
+        .hero p { color: var(--gray); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .blog-grid { max-width: 900px; margin: 0 auto 80px; padding: 0 20px; display: grid; gap: 24px; }
+        .blog-card { background: var(--darker); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 28px 32px; transition: border-color 0.2s, transform 0.2s; }
+        .blog-card:hover { border-color: rgba(76,175,80,0.4); transform: translateY(-2px); }
+        .blog-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+        .blog-card h2 a { color: var(--light); text-decoration: none; }
+        .blog-card h2 a:hover { color: var(--accent); }
+        .blog-card p { color: var(--gray); font-size: 0.95rem; margin-bottom: 12px; }
+        .blog-card .tag { display: inline-block; background: rgba(76,175,80,0.15); color: var(--accent); padding: 3px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; margin-right: 6px; }
+        footer { text-align: center; padding: 40px 20px; color: var(--gray); font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.1); }
+        footer a { color: var(--accent); text-decoration: none; }
+        @media (max-width: 768px) { .hero h1 { font-size: 1.8rem; } .nav-links { display: none; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar"><div class="nav-container">
+        <a href="/" class="logo"><span class="logo-icon">🎾</span><span class="logo-text">ServeBot</span></a>
+        <div class="nav-links"><a href="/">Home</a><a href="/blog/">Blog</a><a href="/#pricing">Pricing</a><a href="/book.html" class="btn-primary">Book Now</a></div>
+    </div></nav>
+
+    <section class="hero">
+        <h1>Tennis Tips & <span>Guides</span></h1>
+        <p>Practical advice to help you improve your game, find courts, and make the most of your practice time.</p>
+    </section>
+
+    <div class="blog-grid">
+        <div class="blog-card">
+            <h2><a href="/blog/solo-tennis-drills.html">5 Solo Tennis Drills You Can Do with a Ball Machine</a></h2>
+            <p>Master your tennis game with these 5 practical drills — from crosscourt forehands to serve-plus-one simulations. Perfect for solo practice.</p>
+            <span class="tag">Drills</span><span class="tag">Solo Practice</span>
+        </div>
+
+        <div class="blog-card">
+            <h2><a href="/blog/ball-machine-vs-hitting-partner.html">Tennis Ball Machine vs Hitting Partner: Which Is Better?</a></h2>
+            <p>An honest comparison of practicing with a ball machine versus a hitting partner. Pros, cons, and when to use each.</p>
+            <span class="tag">Comparison</span><span class="tag">Training</span>
+        </div>
+
+        <div class="blog-card">
+            <h2><a href="/blog/how-to-use-ball-machine.html">How to Use a Tennis Ball Machine Effectively</a></h2>
+            <p>A beginner-friendly guide to ball machine setup, drill patterns, session structure, and common mistakes to avoid.</p>
+            <span class="tag">Beginner Guide</span><span class="tag">Tips</span>
+        </div>
+
+        <div class="blog-card">
+            <h2><a href="/blog/best-tennis-courts-newton-boston.html">Best Public Tennis Courts in Newton & Boston Area (2026)</a></h2>
+            <p>Find the best public courts in Newton, Brookline, Cambridge, and Boston — with addresses, court counts, surface types, and lighting info.</p>
+            <span class="tag">Local Guide</span><span class="tag">Newton</span><span class="tag">Boston</span>
+        </div>
+    </div>
+
+    <footer><p>&copy; 2026 <a href="/">ServeBot Rentals</a> &bull; Newton, MA</p></footer>
+</body>
+</html>

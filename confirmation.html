@@ -99,9 +99,9 @@
 
     <section class="confirmation-page">
         <div class="confirmation-card">
-            <div class="confirmation-icon">✅</div>
-            <h1>Booking Confirmed!</h1>
-            <p>Thank you for your reservation. You'll receive a confirmation email shortly.</p>
+            <div class="confirmation-icon">⏳</div>
+            <h1>Checking Booking Status...</h1>
+            <p>Please wait while we verify your payment and booking details.</p>
             
             <div class="confirmation-details" id="booking-details">
                 <div class="detail-row">
@@ -110,7 +110,7 @@
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Status</span>
-                    <span class="detail-value" style="color: var(--primary);">Confirmed</span>
+                    <span class="detail-value" id="booking-status">Checking...</span>
                 </div>
             </div>
 
@@ -132,36 +132,56 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         const sessionId = params.get('session_id');
+        const bookingId = params.get('booking_id');
+        const heading = document.querySelector('.confirmation-card h1');
+        const subtext = document.querySelector('.confirmation-card p');
+        const icon = document.querySelector('.confirmation-icon');
+        const statusEl = document.getElementById('booking-status');
+        const bookingIdEl = document.getElementById('booking-id');
 
-        if (sessionId) {
+        if (sessionId || bookingId) {
             let attempts = 0;
             const maxAttempts = 10;
 
             async function checkStatus() {
                 try {
-                    const resp = await fetch('/api/booking-status?session_id=' + encodeURIComponent(sessionId));
+                    const query = bookingId
+                        ? 'booking_id=' + encodeURIComponent(bookingId)
+                        : 'session_id=' + encodeURIComponent(sessionId);
+                    const resp = await fetch('/api/booking-status?' + query);
                     const data = await resp.json();
 
                     if (data.status === 'confirmed') {
-                        document.getElementById('booking-id').textContent = data.booking_id ? data.booking_id.substring(0, 8) + '...' : 'Confirmed';
-                        document.querySelector('.confirmation-icon').textContent = '✅';
-                        document.querySelector('.confirmation-card h1').textContent = 'Booking Confirmed!';
-                        document.querySelector('.confirmation-card p').textContent = 'Thank you for your reservation. You will receive a confirmation email shortly.';
+                        bookingIdEl.textContent = data.booking_id ? data.booking_id.substring(0, 8) + '...' : '-';
+                        statusEl.textContent = 'Confirmed';
+                        statusEl.style.color = 'var(--primary)';
+                        icon.textContent = '✅';
+                        heading.textContent = 'Booking Confirmed!';
+                        subtext.textContent = 'Thank you for your reservation. We will contact you soon with next steps.';
                     } else if (attempts < maxAttempts) {
                         attempts++;
-                        document.querySelector('.confirmation-card h1').textContent = 'Processing Payment...';
-                        document.querySelector('.confirmation-icon').textContent = '⏳';
+                        statusEl.textContent = 'Processing...';
+                        heading.textContent = 'Processing Payment...';
+                        icon.textContent = '⏳';
                         setTimeout(checkStatus, 2000);
                     } else {
-                        document.querySelector('.confirmation-card h1').textContent = 'Payment Received';
-                        document.querySelector('.confirmation-card p').textContent = 'Your booking is being processed. You will receive a confirmation email shortly.';
+                        statusEl.textContent = 'Pending';
+                        heading.textContent = 'Payment Still Processing';
+                        subtext.textContent = 'Your payment is still being verified. Please refresh this page in a few minutes.';
                     }
                 } catch (e) {
                     console.error('Status check failed:', e);
+                    statusEl.textContent = 'Error';
+                    heading.textContent = 'Unable to Verify Booking';
+                    subtext.textContent = 'We could not verify your booking status right now. Please try again shortly.';
                 }
             }
 
             checkStatus();
+        } else {
+            statusEl.textContent = 'Unknown';
+            heading.textContent = 'Missing Booking Reference';
+            subtext.textContent = 'This page requires a valid booking link from checkout.';
         }
     </script>
 </body>

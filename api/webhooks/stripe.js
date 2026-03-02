@@ -1,6 +1,5 @@
 // POST /api/webhooks/stripe
 // Handles Stripe webhook events
-// Payment-first: creates booking in DB only after successful payment
 
 import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
@@ -56,36 +55,49 @@ export default async function handler(req, res) {
     switch (event.type) {
         case 'checkout.session.completed': {
             const session = event.data.object;
-            const meta = session.metadata || {};
+            const bookingId = session.metadata?.booking_id || null;
 
-            // Payment-first: create booking from metadata
-            if (meta.customer_name && meta.start_date) {
-                const { data: booking, error } = await supabase
-                    .from('bookings')
-                    .insert({
-                        customer_name: meta.customer_name,
-                        customer_email: meta.customer_email,
-                        customer_phone: meta.customer_phone,
-                        rental_type: meta.rental_type,
-                        start_date: meta.start_date,
-                        end_date: meta.end_date,
-                        pickup_delivery: meta.pickup_delivery,
-                        delivery_address: meta.delivery_address || null,
-                        total_amount: parseInt(meta.total_amount, 10),
-                        deposit_amount: parseInt(meta.deposit_amount, 10),
-                        status: 'confirmed',
-                        stripe_session_id: session.id,
-                        stripe_payment_intent: session.payment_intent,
-                        notes: meta.notes || null
-                    })
-                    .select()
-                    .single();
+            if (!bookingId) {
+                console.error('Missing booking_id in checkout session metadata:', session.id);
+                break;
+            }
 
-                if (error) {
-                    console.error('Failed to create booking from webhook:', error);
-                } else {
-                    console.log(`Booking ${booking.id} created and confirmed`);
-                }
+            const { data: booking, error } = await supabase
+                .from('bookings')
+                .update({
+                    status: 'confirmed',
+                    stripe_session_id: session.id,
+                    stripe_payment_intent: session.payment_intent
+                })
+                .eq('id', bookingId)
+                .in('status', ['pending', 'confirmed'])
+                .select('id')
+                .single();
+
+            if (error) {
+                console.error('Failed to confirm booking from webhook:', error);
+            } else {
+                console.log(`Booking ${booking.id} confirmed from webhook`);
+            }
+            break;
+        }
+
+        case 'checkout.session.expired': {
+            const session = event.data.object;
+            const bookingId = session.metadata?.booking_id || null;
+
+            if (!bookingId) {
+                break;
+            }
+
+            const { error } = await supabase
+                .from('bookings')
+                .update({ status: 'cancelled' })
+                .eq('id', bookingId)
+                .eq('status', 'pending');
+
+            if (error) {
+                console.error('Failed to cancel expired pending booking:', error);
             }
             break;
         }

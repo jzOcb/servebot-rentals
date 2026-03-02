@@ -93,20 +93,26 @@ CREATE POLICY "Machines are viewable by everyone"
     ON machines FOR SELECT 
     USING (true);
 
--- Public read access for bookings (for availability check)
-CREATE POLICY "Bookings dates are viewable for availability" 
-    ON bookings FOR SELECT 
-    USING (true);
+-- Restrict bookings SELECT to service role only
+CREATE POLICY "Service role can read bookings"
+    ON bookings FOR SELECT
+    USING (auth.role() = 'service_role');
 
 -- Public insert for new bookings
 CREATE POLICY "Anyone can create bookings" 
     ON bookings FOR INSERT 
     WITH CHECK (true);
 
--- Service role can update bookings (for webhooks)
-CREATE POLICY "Service role can update bookings" 
-    ON bookings FOR UPDATE 
-    USING (true);
+-- Restrict bookings UPDATE to service role only
+CREATE POLICY "Service role can update bookings"
+    ON bookings FOR UPDATE
+    USING (auth.role() = 'service_role')
+    WITH CHECK (auth.role() = 'service_role');
+
+-- Explicitly deny booking deletes
+CREATE POLICY "No one can delete bookings"
+    ON bookings FOR DELETE
+    USING (false);
 
 -- Public read for blocked dates
 CREATE POLICY "Blocked dates are viewable by everyone" 
@@ -117,7 +123,7 @@ CREATE POLICY "Blocked dates are viewable by everyone"
 CREATE OR REPLACE VIEW daily_availability AS
 SELECT 
     d.date,
-    3 - COALESCE(booked.count, 0) - COALESCE(blocked.count, 0) AS available_machines,
+    COALESCE(active.total, 0) - COALESCE(booked.count, 0) - COALESCE(blocked.count, 0) AS available_machines,
     CASE 
         WHEN EXTRACT(DOW FROM d.date) IN (0, 6) THEN 'weekend'
         ELSE 'weekday'
@@ -128,11 +134,17 @@ FROM generate_series(
     '1 day'
 ) AS d(date)
 LEFT JOIN (
+    SELECT COUNT(*) AS total
+    FROM machines
+    WHERE status = 'active'
+) active ON true
+LEFT JOIN (
     SELECT 
         generate_series(start_date, end_date, '1 day')::date AS date,
         COUNT(*) AS count
     FROM bookings
-    WHERE status IN ('pending', 'confirmed', 'in_progress')
+    WHERE status IN ('confirmed', 'in_progress')
+       OR (status = 'pending' AND created_at >= NOW() - INTERVAL '30 minutes')
     GROUP BY 1
 ) booked ON d.date = booked.date
 LEFT JOIN (
