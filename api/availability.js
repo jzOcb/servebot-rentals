@@ -14,8 +14,9 @@ const PRICING = {
     full_day_weekday: { price: 7500, days: 1, dayType: 'weekday' },
     half_day_weekend: { price: 5500, days: 1, dayType: 'weekend' },
     full_day_weekend: { price: 10000, days: 1, dayType: 'weekend' },
-    weekend_package: { price: 17500, days: 2, dayType: 'weekend' },
-    weekly: { price: 35000, days: 7, dayType: 'any' }
+    weekend_package: { price: 12500, days: 2, dayType: 'weekend' },
+    weekly: { price: 25000, days: 7, dayType: 'any' },
+    first_time: { price: 5000, days: 1, dayType: 'any' }
 };
 
 const CORS_ORIGIN = 'https://servebot-rentals.vercel.app';

@@ -19,8 +19,9 @@ const PRICING = {
     full_day_weekday: { price: 7500, days: 1, name: 'Full Day Rental (Weekday)' },
     half_day_weekend: { price: 5500, days: 1, name: 'Half Day Rental (Weekend)' },
     full_day_weekend: { price: 10000, days: 1, name: 'Full Day Rental (Weekend)' },
-    weekend_package: { price: 17500, days: 2, name: 'Weekend Package (Sat+Sun)' },
-    weekly: { price: 35000, days: 7, name: 'Weekly Rental' }
+    weekend_package: { price: 12500, days: 2, name: 'Weekend Package (Sat+Sun)' },
+    weekly: { price: 25000, days: 7, name: 'Weekly Rental' },
+    first_time: { price: 5000, days: 1, name: 'First Time Experience (Full Day)' }
 };
 
 const DEPOSIT_AMOUNT = 30000; // $300 in cents
