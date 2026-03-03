@@ -2,22 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://servebot-rentals.vercel.app/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://servebot-rentals.vercel.app/" />
-    <xhtml:link rel="alternate" hreflang="zh" href="https://servebot-rentals.vercel.app/cn.html" />
-    <lastmod>2026-03-01</lastmod>
+    <loc>https://www.servebotrentals.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.servebotrentals.com/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.servebotrentals.com/cn.html" />
+    <lastmod>2026-03-02</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://servebot-rentals.vercel.app/cn.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://servebot-rentals.vercel.app/" />
-    <xhtml:link rel="alternate" hreflang="zh" href="https://servebot-rentals.vercel.app/cn.html" />
-    <lastmod>2026-03-01</lastmod>
+    <loc>https://www.servebotrentals.com/cn.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.servebotrentals.com/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.servebotrentals.com/cn.html" />
+    <lastmod>2026-03-02</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://servebot-rentals.vercel.app/book.html</loc>
-    <lastmod>2026-03-01</lastmod>
+    <loc>https://www.servebotrentals.com/book.html</loc>
+    <lastmod>2026-03-02</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.servebotrentals.com/blog/</loc>
+    <lastmod>2026-03-02</lastmod>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.servebotrentals.com/blog/ball-machine-vs-hitting-partner.html</loc>
+    <lastmod>2026-03-02</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.servebotrentals.com/blog/best-tennis-courts-newton-boston.html</loc>
+    <lastmod>2026-03-02</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.servebotrentals.com/blog/how-to-use-ball-machine.html</loc>
+    <lastmod>2026-03-02</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.servebotrentals.com/blog/solo-tennis-drills.html</loc>
+    <lastmod>2026-03-02</lastmod>
+    <priority>0.6</priority>
   </url>
 </urlset>
