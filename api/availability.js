@@ -19,7 +19,7 @@ const PRICING = {
     first_time: { price: 5000, days: 1, dayType: 'any' }
 };
 
-const CORS_ORIGIN = 'https://servebot-rentals.vercel.app';
+const ALLOWED_ORIGINS = ['https://servebot-rentals.vercel.app', 'https://servebotrentals.com', 'https://www.servebotrentals.com'];
 
 function dateToStr(dateObj) {
     return dateObj.toISOString().slice(0, 10);
@@ -84,7 +84,7 @@ function hasConsecutiveAvailability(startDate, days, activeMachines, bookings, b
 }
 
 export default async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', CORS_ORIGIN);
+    const origin = req.headers.origin; res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0]);
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 

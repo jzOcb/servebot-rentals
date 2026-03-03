@@ -26,7 +26,7 @@ const PRICING = {
 
 const DEPOSIT_AMOUNT = 30000; // $300 in cents
 const DELIVERY_FEE = 2500; // $25 in cents
-const CORS_ORIGIN = 'https://servebot-rentals.vercel.app';
+const ALLOWED_ORIGINS = ['https://servebot-rentals.vercel.app', 'https://servebotrentals.com', 'https://www.servebotrentals.com'];
 
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
 const RATE_LIMIT_MAX = 5;
@@ -88,7 +88,7 @@ function normalizeRequiredString(value) {
 }
 
 export default async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', CORS_ORIGIN);
+    const origin = req.headers.origin; res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0]);
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
