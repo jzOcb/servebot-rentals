@@ -1,0 +1,18 @@
+# ServeBot Rentals
+
+> ServeBot Rentals offers tennis ball machine rentals in Newton and the Greater Boston area, Massachusetts. We deliver the machine directly to your court — no membership, no club fees. Rent a Musketeer M5 ball machine by the weekend ($125) or week ($250). First-time rental starts at $50 for a full day.
+
+## Services
+
+- [Homepage](https://www.servebotrentals.com/): Full service overview — pricing, how it works, delivery areas covering 12+ cities, equipment details, and frequently asked questions about tennis ball machine rental.
+- [中文页面](https://www.servebotrentals.com/cn.html): 网球发球机租赁服务中文介绍 — 价格、服务范围、常见问题。
+- [Book Now](https://www.servebotrentals.com/book.html): Reserve your tennis ball machine rental online with instant confirmation.
+
+## Key Facts
+
+- Location: Newton, MA — delivering to Newton, Brookline, Wellesley, Needham, Waltham, Watertown, Brighton, Chestnut Hill, Natick, Dedham, West Roxbury, and Boston
+- Equipment: Musketeer M5 tennis ball machines (professional grade, adjustable speed/spin/trajectory)
+- Pricing: Weekend rental $125 / Weekly rental $250 / First-time trial $50 (full day)
+- Delivery: Free delivery and pickup at your preferred public or private tennis court
+- Booking: Online booking with instant confirmation, no membership required
+- Languages: English and Chinese service available
