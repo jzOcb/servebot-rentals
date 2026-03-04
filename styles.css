@@ -184,7 +184,7 @@ body {
     justify-content: center;
     position: relative;
     background: linear-gradient(135deg, #1a1a1a 0%, #2d4a2d 100%);
-    background-image: url('https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=1920');
+    background-image: url('hero.webp');
     background-size: cover;
     background-position: center;
     padding-top: 80px;

@@ -31,8 +31,12 @@
     <meta name="twitter:description" content="Rent professional tennis ball machines in Greater Boston. Starting at $45/half-day.">
     <meta name="twitter:image" content="https://www.servebotrentals.com/og-image.png">
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="hero.webp">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.3/src/lite-yt-embed.min.js" defer></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -243,9 +247,7 @@
                     </ul>
                 </div>
                 <div class="machine-image">
-                    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
-                        <iframe src="https://www.youtube.com/embed/GWMmkRIg4-I?rel=0" title="Tennis Ball Machine Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;"></iframe>
-                    </div>
+                    <lite-youtube videoid="GWMmkRIg4-I" playlabel="Tennis Ball Machine Demo" style="border-radius:12px;"></lite-youtube>
                 </div>
             </div>
         </div>
@@ -439,7 +441,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <script>
         const menuBtn = document.querySelector(".mobile-menu-btn");
         const navLinks = document.querySelector(".nav-links");
