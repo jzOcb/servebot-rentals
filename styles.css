@@ -927,3 +927,10 @@ section {
         color: var(--primary);
     }
 }
+
+/* Mobile: smaller hero image */
+@media (max-width: 768px) {
+    .hero {
+        background-image: url('hero-mobile.webp');
+    }
+}
